@@ -1,0 +1,46 @@
+<mxfile host="Electron">
+  <diagram name="第 1 页" id="wk3jOmCvn5u0ddUye9I8">
+    <mxGraphModel dx="975" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cJVyWorQExgP_MaLxAop-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="360" width="290" x="190" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-4" edge="1" parent="1" source="cJVyWorQExgP_MaLxAop-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cJVyWorQExgP_MaLxAop-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div data-zone-id=&quot;0&quot; data-line-index=&quot;0&quot; data-line=&quot;true&quot; style=&quot;white-space: pre-wrap;&quot;&gt;&lt;font face=&quot;宋体&quot;&gt;S1：获取早期循环运行数据，构造统一长度的循环退化特征序列并生成RUL标签&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="270" x="200" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-8" edge="1" parent="1" source="cJVyWorQExgP_MaLxAop-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="cJVyWorQExgP_MaLxAop-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div data-zone-id=&quot;0&quot; data-line-index=&quot;0&quot; data-line=&quot;true&quot; style=&quot;&quot;&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;span style=&quot;white-space-collapse: preserve;&quot;&gt;S2：整理三维或四维输入，通过共享线性投影生成潜在变量循环序列&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="270" x="200" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-5" edge="1" parent="1" source="cJVyWorQExgP_MaLxAop-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cJVyWorQExgP_MaLxAop-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div data-zone-id=&quot;0&quot; data-line-index=&quot;0&quot; data-line=&quot;true&quot; style=&quot;&quot;&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;span style=&quot;white-space-collapse: preserve;&quot;&gt;S3：沿循环维进行样本级归一化，降低电池个体基线和尺度差异&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="270" x="200" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-12" edge="1" parent="1" source="cJVyWorQExgP_MaLxAop-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cJVyWorQExgP_MaLxAop-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div data-zone-id=&quot;0&quot; data-line-index=&quot;0&quot; data-line=&quot;true&quot; style=&quot;&quot;&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;span style=&quot;white-space-collapse: preserve;&quot;&gt;S4：通过局部循环片段支路编码局部退化模式，并进行片段级自适应加权&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="270" x="200" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-9" edge="1" parent="1" source="cJVyWorQExgP_MaLxAop-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="cJVyWorQExgP_MaLxAop-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div data-zone-id=&quot;0&quot; data-line-index=&quot;0&quot; data-line=&quot;true&quot; style=&quot;&quot;&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;span style=&quot;white-space-collapse: preserve;&quot;&gt;S5：通过完整变量循环轨迹支路编码每个潜在变量的全窗口演化趋势&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="270" x="200" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="cJVyWorQExgP_MaLxAop-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div data-zone-id=&quot;0&quot; data-line-index=&quot;0&quot; data-line=&quot;true&quot; style=&quot;&quot;&gt;&lt;font face=&quot;宋体&quot;&gt;&lt;span style=&quot;white-space-collapse: preserve;&quot;&gt;S6：融合两支路表示，进行变量关系编码、变量级自适应加权和RUL回归，训练或推理输出预测值&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="270" x="200" y="460" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
