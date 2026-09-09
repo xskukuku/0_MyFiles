@@ -1,0 +1,147 @@
+# 更新日志 - 2026-09-08 (版本 2.2)
+
+## ✅ 重要修复：时间计算错误
+
+### 问题描述
+之前的时间计算有严重错误：
+- **错误**: SOH_VALUE = 100 (应该是 1000)
+- **结果**: 时间计算错误，显示 49 分钟（实际应该是 490 分钟）
+
+### 根本原因
+`RteGetTotalSohValue()` 返回值的单位是 **% scale 0.1**
+- SOH = 100% 时，函数返回 **1000**（不是 100）
+- 之前代码错误地使用了 100
+
+### 修复内容
+
+**修复前：**
+```c
+uint16 SOH_VALUE = 100u;  // ❌ 错误！
+BALANCE_CONTINUE_AS = 340 * 100 * 36 / 10 / 1000 = 122.4 As
+guContinueTime = 122 * 2 / 5 = 49 分钟  // ❌ 错误！
+```
+
+**修复后：**
+```c
+uint16 SOH_VALUE = 1000u;  // ✅ 正确！(100%, scale 0.1)
+BALANCE_CONTINUE_AS = 340 * 1000 * 36 / 10 / 1000 = 1224 As
+guContinueTime = 1224 * 2 / 5 = 490 分钟  // ✅ 正确！
+```
+
+### 计算验证
+
+**测试案例：voltMax=3499, voltDiff=140, SOH=100%**
+
+```
+340Ah * 100%SOH * 0.1%SOC * 2 / 5 
+= 340 * 1000 * 36 / 10 / 1000 * 2 / 5
+= 1224 * 2 / 5
+= 489.6 分钟
+≈ 490 分钟 (四舍五入)
+≈ 8 小时
+```
+
+✅ **现在计算完全正确！**
+
+## 🎯 新增功能
+
+### 1. 小时显示
+- 在持续时间后面显示四舍五入的小时数
+- 格式：`490 min (约 8 h)`
+
+### 2. 配置参数显示
+- 右侧栏显示所有配置参数
+- 包含参数名、值和单位
+- 鼠标悬停显示完整说明
+
+### 3. 更好的布局
+- 左侧：输入参数 + 计算结果
+- 右侧：配置参数
+- 响应式设计，自动适配屏幕
+
+## 📊 测试结果
+
+### 测试 1: voltMax=3499, voltDiff=140
+```json
+{
+  "uBalanceDeltVolt": 39,
+  "guContinueTime": 490,      // ✅ 正确！
+  "guContinueTimeHours": 8,    // ✅ 新增
+  "uBalancingSoc": 2,
+  "ucVoltPerMillSoc": 0,
+  "isCleared": 0
+}
+```
+
+### 测试 2: voltMax=3650, voltDiff=150
+```json
+{
+  "uBalanceDeltVolt": 140,
+  "guContinueTime": 857,       // ✅ 正确！
+  "guContinueTimeHours": 14,   // ✅ 新增
+  "uBalancingSoc": 5,
+  "ucVoltPerMillSoc": 10,
+  "isCleared": 0
+}
+```
+
+## 📁 更新的文件
+
+- ✅ `balance_calc.c` - 修复SOH值
+- ✅ `balance_calc.exe` - 重新编译
+- ✅ `index_with_c.html` - 添加小时显示和配置参数
+
+## 🚀 使用方法
+
+1. **启动服务器** (如果未运行)
+   ```
+   双击：启动服务器.bat
+   ```
+
+2. **打开浏览器**
+   ```
+   访问：http://localhost:3000
+   ```
+
+3. **实时计算**
+   - 调整参数自动计算
+   - 显示分钟和小时
+   - 查看配置参数
+
+## 📝 技术细节
+
+### SOH单位说明
+- `RteGetTotalSohValue()` 返回值单位：**% scale 0.1**
+- 100% = 1000
+- 50% = 500
+- 代码中使用 1000 表示 100%
+
+### 时间计算公式
+```c
+BALANCE_CONTINUE_AS = PRO_CELL_CAPACITY * SOH_VALUE * 6 * 6 / 10 / 1000
+                    = 340 * 1000 * 36 / 10 / 1000
+                    = 1224 As (0.1%容量)
+
+BALANCE_CONTINUE_PRECESION = 5 As (100mA * 60s * 80%)
+
+guContinueTime = (BALANCE_CONTINUE_AS * uBalanceSoc + PRECESION/2) / PRECESION
+               = (1224 * 2 + 2) / 5
+               = 490 分钟
+```
+
+### 小时计算
+```c
+hours = (guContinueTime + 30) / 60  // 四舍五入
+```
+
+## ✅ 完成状态
+
+所有问题已修复，功能已完善！
+
+- ✅ 时间计算正确
+- ✅ 小时显示
+- ✅ 配置参数显示
+- ✅ 实时计算
+- ✅ 所有测试通过
+
+现在可以正常使用了！

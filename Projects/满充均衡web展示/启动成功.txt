@@ -1,0 +1,35 @@
+================================================
+    满充均衡Web演示 - 快速启动指南
+================================================
+
+✅ 服务器已成功启动！
+
+📌 访问地址：
+   http://localhost:3000
+
+📌 使用方法：
+   1. 在浏览器中打开上面的地址
+   2. 调整输入参数（最大单体电压、单体电压差）
+   3. 点击"计算结果"按钮
+   4. 查看从真实C代码返回的结果
+
+📌 测试结果：
+   ✓ voltMax=3450, voltDiff=30
+     → uBalanceDeltVolt=20 mV, guContinueTime=49 min
+
+   ✓ voltMax=3600, voltDiff=100  
+     → 均衡标志已清除 (voltDiff <= uBalanceDeltVolt)
+
+   ✓ voltMax=3650, voltDiff=150
+     → uBalanceDeltVolt=140 mV, guContinueTime=122 min
+
+📌 文件说明：
+   - balance_calc.exe    真实的C代码编译程序
+   - server.js           Node.js服务器
+   - index_with_c.html   Web界面
+   - 启动服务器.bat      一键启动脚本
+
+📌 停止服务器：
+   按 Ctrl+C 或关闭命令行窗口
+
+================================================

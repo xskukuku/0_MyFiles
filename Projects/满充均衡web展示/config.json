@@ -1,0 +1,69 @@
+{
+  "BALANCE_CHGVOLTLVL0": {
+    "value": 3450,
+    "unit": "mV",
+    "description": "Cell-voltage threshold level 0"
+  },
+  "BALANCE_CHGVOLTLVL1": {
+    "value": 3500,
+    "unit": "mV",
+    "description": "Cell-voltage threshold level 1"
+  },
+  "BALANCE_CHGVOLTPERSOCLVL1": {
+    "value": 6,
+    "unit": "mV",
+    "description": "Voltage change per 0.1% SOC at 3500 mV"
+  },
+  "BALANCE_CHGVOLTPERSOCLVL2": {
+    "value": 10,
+    "unit": "mV",
+    "description": "Voltage change per 0.1% SOC at 3650 mV"
+  },
+  "BALANCE_CHGDELTVOLT0": {
+    "value": 20,
+    "unit": "mV",
+    "description": "Full-charge balance delta-voltage at level 0"
+  },
+  "BALANCE_CHGDELTVOLT1": {
+    "value": 40,
+    "unit": "mV",
+    "description": "Full-charge balance delta-voltage at level 1"
+  },
+  "BALANCE_CHGDELTVOLT2": {
+    "value": 140,
+    "unit": "mV",
+    "description": "Full-charge balance delta-voltage at charge-voltage limit"
+  },
+  "BALANCE_DYNAMIC_TEMPMIN": {
+    "value": 1200,
+    "unit": "°C*10",
+    "description": "Dynamic balance temperature minimum (20°C)",
+    "note": "(TEMPERATURE_OFFSET + 20u) * TEMPERATURE_FACTOR, assuming OFFSET=-20, FACTOR=10"
+  },
+  "BALANCE_LOWSOC_TEMPDIFF": {
+    "value": 10,
+    "unit": "°C",
+    "description": "Do not overwrite balance setting above this temperature difference"
+  },
+  "BALANCE_SOC_MIN": {
+    "value": 2,
+    "unit": "0.1%SOC",
+    "description": "Minimum SOC threshold"
+  },
+  "BALANCE_SOC_NORMAL": {
+    "value": 4,
+    "unit": "0.1%SOC",
+    "description": "Normal SOC threshold"
+  },
+  "BALANCE_SOC_MAX": {
+    "value": 7,
+    "unit": "0.1%SOC",
+    "description": "Maximum SOC threshold"
+  },
+  "BALANCE_TIME_MAX": {
+    "value": 1920,
+    "unit": "minutes",
+    "description": "Max balancing time (32h)",
+    "note": "32 * 60"
+  }
+}

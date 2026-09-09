@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>满充均衡Web演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.5em;
+        }
+
+        .input-section {
+            grid-column: 1 / -1;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 3px solid #667eea;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 3px solid #667eea;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .arrow-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #667eea;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .arrow-btn:hover {
+            background: #5568d3;
+            transform: scale(1.1);
+        }
+
+        .arrow-btn:active {
+            transform: scale(0.95);
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .value-display {
+            min-width: 120px;
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .param-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .param-label {
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .param-desc {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .param-input-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .param-input {
+            width: 100px;
+            padding: 6px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .reset-btn {
+            padding: 6px 12px;
+            background: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #ffb300;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .result-value {
+            font-size: 1.3em;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .result-value.empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        .result-value.cleared {
+            color: #dc3545;
+            font-style: italic;
+        }
+
+        .auto-calc-notice {
+            text-align: center;
+            color: #28a745;
+            font-weight: 600;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .logic-branch {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            padding: 10px;
+            background: #e7f3ff;
+            border-radius: 6px;
+            margin-top: 10px;
+            border: 2px solid #667eea;
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ 满充均衡Web演示</h1>
+            <p>Full Charge Balance Demo - Real-time Parameter Calculation</p>
+        </div>
+
+        <div class="content">
+            <!-- 输入参数区域 -->
+            <div class="section input-section">
+                <h2>📊 输入参数</h2>
+                
+                <div class="input-group">
+                    <label>RteGetTotalCellVoltMaxMax (最大单体电压)</label>
+                    <div class="slider-container">
+                        <input type="range" id="voltMaxSlider" min="3300" max="3800" value="3450" step="1">
+                        <div class="controls">
+                            <button class="arrow-btn" onclick="adjustValue('voltMax', -1)">▼</button>
+                            <input type="number" id="voltMaxInput" min="3300" max="3800" value="3450" step="1">
+                            <button class="arrow-btn" onclick="adjustValue('voltMax', 1)">▲</button>
+                            <div class="value-display"><span id="voltMaxDisplay">3450</span> mV</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>RteGetTotalCellVoltDiff (单体电压差)</label>
+                    <div class="slider-container">
+                        <input type="range" id="voltDiffSlider" min="0" max="200" value="20" step="1">
+                        <div class="controls">
+                            <button class="arrow-btn" onclick="adjustValue('voltDiff', -1)">▼</button>
+                            <input type="number" id="voltDiffInput" min="0" max="200" value="20" step="1">
+                            <button class="arrow-btn" onclick="adjustValue('voltDiff', 1)">▲</button>
+                            <div class="value-display"><span id="voltDiffDisplay">20</span> mV</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auto-calc-notice">
+                    ✨ 实时计算已启用 - 参数变化时自动更新结果
+                </div>
+                <div class="logic-branch" id="logicBranch">
+                    当前逻辑分支：--
+                </div>
+            </div>
+
+            <!-- 配置参数区域 -->
+            <div class="section">
+                <h2>⚙️ 配置参数</h2>
+                <div id="configParams" class="param-grid"></div>
+            </div>
+
+            <!-- 输出结果区域 -->
+            <div class="section">
+                <h2>📈 计算结果</h2>
+                <div class="result-box">
+                    <div class="result-item">
+                        <span class="result-label">uBalanceDeltVolt (均衡压差阈值)</span>
+                        <span class="result-value" id="resultDeltVolt">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">guContinueTime (持续时间)</span>
+                        <span class="result-value" id="resultTime">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">uBalancingSoc (均衡SOC阈值)</span>
+                        <span class="result-value" id="resultSoc">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">ucVoltPerMillSoc (每0.1%SOC电压变化)</span>
+                        <span class="result-value" id="resultVoltPerSoc">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 内嵌配置数据，避免CORS问题
+        const defaultConfig = {
+            "PRO_CHG_CELL_VOLT_MAX": {
+                "value": 3650,
+                "unit": "mV",
+                "description": "Charge cell voltage maximum (LFP)"
+            },
+            "PRO_CELL_CAPACITY": {
+                "value": 340,
+                "unit": "Ah",
+                "description": "Cell capacity"
+            },
+            "SOH_VALUE": {
+                "value": 100,
+                "unit": "%",
+                "description": "State of Health (SOH)"
+            },
+            "BALANCE_CHGVOLTLVL0": {
+                "value": 3450,
+                "unit": "mV",
+                "description": "Cell-voltage threshold level 0"
+            },
+            "BALANCE_CHGVOLTLVL1": {
+                "value": 3500,
+                "unit": "mV",
+                "description": "Cell-voltage threshold level 1"
+            },
+            "BALANCE_CHGVOLTPERSOCLVL1": {
+                "value": 6,
+                "unit": "mV",
+                "description": "Voltage change per 0.1% SOC at 3500 mV"
+            },
+            "BALANCE_CHGVOLTPERSOCLVL2": {
+                "value": 10,
+                "unit": "mV",
+                "description": "Voltage change per 0.1% SOC at 3650 mV"
+            },
+            "BALANCE_CHGDELTVOLT0": {
+                "value": 20,
+                "unit": "mV",
+                "description": "Full-charge balance delta-voltage at level 0"
+            },
+            "BALANCE_CHGDELTVOLT1": {
+                "value": 40,
+                "unit": "mV",
+                "description": "Full-charge balance delta-voltage at level 1"
+            },
+            "BALANCE_CHGDELTVOLT2": {
+                "value": 140,
+                "unit": "mV",
+                "description": "Full-charge balance delta-voltage at charge-voltage limit"
+            },
+            "BALANCE_DYNAMIC_TEMPMIN": {
+                "value": 1200,
+                "unit": "°C*10",
+                "description": "Dynamic balance temperature minimum (20°C)"
+            },
+            "BALANCE_LOWSOC_TEMPDIFF": {
+                "value": 10,
+                "unit": "°C",
+                "description": "Temperature difference threshold"
+            },
+            "BALANCE_SOC_MIN": {
+                "value": 2,
+                "unit": "0.1%SOC",
+                "description": "Minimum SOC threshold"
+            },
+            "BALANCE_SOC_NORMAL": {
+                "value": 4,
+                "unit": "0.1%SOC",
+                "description": "Normal SOC threshold"
+            },
+            "BALANCE_SOC_MAX": {
+                "value": 7,
+                "unit": "0.1%SOC",
+                "description": "Maximum SOC threshold"
+            },
+            "BALANCE_TIME_MAX": {
+                "value": 1920,
+                "unit": "minutes",
+                "description": "Max balancing time (32h)"
+            }
+        };
+
+        let config = JSON.parse(JSON.stringify(defaultConfig));
+
+        // 渲染配置参数
+        function renderConfigParams() {
+            const container = document.getElementById('configParams');
+            container.innerHTML = '';
+
+            for (const [key, param] of Object.entries(config)) {
+                const paramDiv = document.createElement('div');
+                paramDiv.className = 'param-item';
+                paramDiv.innerHTML = `
+                    <div>
+                        <div class="param-label">${key}</div>
+                        <div class="param-desc">${param.description}</div>
+                    </div>
+                    <div class="param-input-group">
+                        <input type="number" class="param-input" 
+                               id="param_${key}" 
+                               value="${param.value}"
+                               onchange="onParamChange()">
+                        <span style="color: #666;">${param.unit}</span>
+                        <button class="reset-btn" onclick="resetParam('${key}')">重置</button>
+                    </div>
+                `;
+                container.appendChild(paramDiv);
+            }
+        }
+
+        // 参数变化时自动计算
+        function onParamChange() {
+            calculate();
+        }
+
+        // 重置单个参数
+        function resetParam(key) {
+            const input = document.getElementById(`param_${key}`);
+            input.value = defaultConfig[key].value;
+            config[key].value = defaultConfig[key].value;
+            calculate();
+        }
+
+        // 同步滑块和输入框，添加实时计算
+        function syncInputs(prefix) {
+            const slider = document.getElementById(`${prefix}Slider`);
+            const input = document.getElementById(`${prefix}Input`);
+            const display = document.getElementById(`${prefix}Display`);
+
+            slider.oninput = function() {
+                input.value = this.value;
+                display.textContent = this.value;
+                calculate();
+            };
+
+            input.oninput = function() {
+                let value = parseInt(this.value);
+                const min = parseInt(slider.min);
+                const max = parseInt(slider.max);
+                
+                if (isNaN(value)) value = min;
+                if (value < min) value = min;
+                if (value > max) value = max;
+                
+                this.value = value;
+                slider.value = value;
+                display.textContent = value;
+                calculate();
+            };
+        }
+
+        // 调整数值
+        function adjustValue(prefix, delta) {
+            const input = document.getElementById(`${prefix}Input`);
+            const slider = document.getElementById(`${prefix}Slider`);
+            const display = document.getElementById(`${prefix}Display`);
+            
+            let value = parseInt(input.value) + delta;
+            const min = parseInt(slider.min);
+            const max = parseInt(slider.max);
+            
+            if (value < min) value = min;
+            if (value > max) value = max;
+            
+            input.value = value;
+            slider.value = value;
+            display.textContent = value;
+            calculate();
+        }
+
+        // 获取当前配置值
+        function getConfigValue(key) {
+            const input = document.getElementById(`param_${key}`);
+            return input ? parseInt(input.value) : config[key].value;
+        }
+
+        // 实现calculateBalanceTime函数
+        function calculateBalanceTime(uBalanceSoc) {
+            const PRO_CELL_CAPACITY = getConfigValue('PRO_CELL_CAPACITY');
+            const SOH_VALUE = getConfigValue('SOH_VALUE');
+            const BALANCE_TIME_MAX = getConfigValue('BALANCE_TIME_MAX');
+            
+            // BALANCE_CONTINUE_AS = PRO_CELL_CAPACITY * SOH * 6 * 6 / 10 / 1000
+            // = 340 * 100 * 36 / 10000 = 122.4 (假设SOH=100%)
+            const BALANCE_CONTINUE_AS = Math.floor(PRO_CELL_CAPACITY * SOH_VALUE * 6 * 6 / 10 / 1000);
+            
+            // BALANCE_CONTINUE_PRECESION = 5 (单位: As; 100mA * 60s * 80%)
+            const BALANCE_CONTINUE_PRECESION = 5;
+            
+            // ulBalanceTime = (BALANCE_CONTINUE_AS * uBalanceSoc + BALANCE_CONTINUE_PRECESION/2) / BALANCE_CONTINUE_PRECESION
+            let ulBalanceTime = Math.floor((BALANCE_CONTINUE_AS * uBalanceSoc + Math.floor(BALANCE_CONTINUE_PRECESION / 2)) / BALANCE_CONTINUE_PRECESION);
+            
+            // 限制最大值
+            if (ulBalanceTime > BALANCE_TIME_MAX) {
+                ulBalanceTime = BALANCE_TIME_MAX;
+            }
+            
+            if (ulBalanceTime > 0xFFFF) {
+                ulBalanceTime = 0xFFFF;
+            }
+            
+            return ulBalanceTime;
+        }
+
+        // 计算结果 - 完全按照C代码逻辑实现
+        function calculate() {
+            const voltMax = parseInt(document.getElementById('voltMaxInput').value);
+            const voltDiff = parseInt(document.getElementById('voltDiffInput').value);
+
+            // 获取配置参数
+            const PRO_CHG_CELL_VOLT_MAX = getConfigValue('PRO_CHG_CELL_VOLT_MAX');
+            const BALANCE_CHGVOLTLVL0 = getConfigValue('BALANCE_CHGVOLTLVL0');
+            const BALANCE_CHGVOLTLVL1 = getConfigValue('BALANCE_CHGVOLTLVL1');
+            const BALANCE_CHGVOLTPERSOCLVL1 = getConfigValue('BALANCE_CHGVOLTPERSOCLVL1');
+            const BALANCE_CHGVOLTPERSOCLVL2 = getConfigValue('BALANCE_CHGVOLTPERSOCLVL2');
+            const BALANCE_CHGDELTVOLT0 = getConfigValue('BALANCE_CHGDELTVOLT0');
+            const BALANCE_CHGDELTVOLT1 = getConfigValue('BALANCE_CHGDELTVOLT1');
+            const BALANCE_CHGDELTVOLT2 = getConfigValue('BALANCE_CHGDELTVOLT2');
+            const BALANCE_SOC_MIN = getConfigValue('BALANCE_SOC_MIN');
+            const BALANCE_SOC_NORMAL = getConfigValue('BALANCE_SOC_NORMAL');
+            const BALANCE_SOC_MAX = getConfigValue('BALANCE_SOC_MAX');
+
+            let uBalanceDeltVolt = null;
+            let guContinueTime = null;
+            let uBalancingSoc = null;
+            let ucVoltPerMillSoc = null;
+            let branchInfo = '';
+            let isCleared = false;
+
+            // 实现ApiSetBalanceFlag的精确逻辑
+            if (voltMax >= BALANCE_CHGVOLTLVL1) {
+                // Branch 3: voltMax >= 3500
+                branchInfo = `分支3: voltMax >= ${BALANCE_CHGVOLTLVL1} mV`;
+                
+                // 计算uBalanceDeltVolt
+                if (voltMax >= PRO_CHG_CELL_VOLT_MAX) {
+                    uBalanceDeltVolt = BALANCE_CHGDELTVOLT2;
+                } else {
+                    uBalanceDeltVolt = BALANCE_CHGDELTVOLT1 + Math.floor(
+                        (voltMax - BALANCE_CHGVOLTLVL1) * (BALANCE_CHGDELTVOLT2 - BALANCE_CHGDELTVOLT1) / 
+                        (PRO_CHG_CELL_VOLT_MAX - BALANCE_CHGVOLTLVL1)
+                    );
+                }
+
+                // 检查voltDiff > uBalanceDeltVolt
+                if (voltDiff > uBalanceDeltVolt) {
+                    // 计算ucVoltPerMillSoc
+                    if (voltMax >= PRO_CHG_CELL_VOLT_MAX) {
+                        ucVoltPerMillSoc = BALANCE_CHGVOLTPERSOCLVL2;
+                    } else {
+                        ucVoltPerMillSoc = BALANCE_CHGVOLTPERSOCLVL1 + Math.floor(
+                            (voltMax - BALANCE_CHGVOLTLVL1) * (BALANCE_CHGVOLTPERSOCLVL2 - BALANCE_CHGVOLTPERSOCLVL1) / 
+                            (PRO_CHG_CELL_VOLT_MAX - BALANCE_CHGVOLTLVL1)
+                        );
+                    }
+
+                    // 计算uBalancingSoc
+                    uBalancingSoc = Math.floor(
+                        (voltDiff - uBalanceDeltVolt + Math.floor(ucVoltPerMillSoc / 2)) / ucVoltPerMillSoc
+                    ) + BALANCE_SOC_NORMAL;
+
+                    // 限制uBalancingSoc <= BALANCE_SOC_MAX
+                    if (uBalancingSoc > BALANCE_SOC_MAX) {
+                        uBalancingSoc = BALANCE_SOC_MAX;
+                    }
+
+                    // 计算guContinueTime
+                    guContinueTime = calculateBalanceTime(uBalancingSoc);
+                    
+                    branchInfo += ` | voltDiff > uBalanceDeltVolt (${voltDiff} > ${uBalanceDeltVolt})`;
+                } else {
+                    // ApiClearBalanceFlag() - 清除均衡标志
+                    isCleared = true;
+                    branchInfo += ` | 均衡标志已清除 (voltDiff <= uBalanceDeltVolt: ${voltDiff} <= ${uBalanceDeltVolt})`;
+                }
+            } else {
+                // Branch 1 & 2: voltMax < 3500
+                if (voltMax < BALANCE_CHGVOLTLVL0) {
+                    // Branch 1: voltMax < 3450
+                    branchInfo = `分支1: voltMax < ${BALANCE_CHGVOLTLVL0} mV`;
+                    uBalanceDeltVolt = BALANCE_CHGDELTVOLT0;
+                } else {
+                    // Branch 2: 3450 <= voltMax < 3500
+                    branchInfo = `分支2: ${BALANCE_CHGVOLTLVL0} <= voltMax < ${BALANCE_CHGVOLTLVL1} mV`;
+                    uBalanceDeltVolt = BALANCE_CHGDELTVOLT0 + Math.floor(
+                        (voltMax - BALANCE_CHGVOLTLVL0) * (BALANCE_CHGDELTVOLT1 - BALANCE_CHGDELTVOLT0) / 
+                        (BALANCE_CHGVOLTLVL1 - BALANCE_CHGVOLTLVL0)
+                    );
+                }
+
+                // 检查voltDiff > uBalanceDeltVolt
+                if (voltDiff > uBalanceDeltVolt) {
+                    // 计算guContinueTime
+                    guContinueTime = calculateBalanceTime(BALANCE_SOC_MIN);
+                    uBalancingSoc = BALANCE_SOC_MIN;
+                    ucVoltPerMillSoc = null; // 这个分支没有ucVoltPerMillSoc
+                    branchInfo += ` | voltDiff > uBalanceDeltVolt (${voltDiff} > ${uBalanceDeltVolt})`;
+                } else {
+                    // ApiClearBalanceFlag() - 清除均衡标志
+                    isCleared = true;
+                    branchInfo += ` | 均衡标志已清除 (voltDiff <= uBalanceDeltVolt: ${voltDiff} <= ${uBalanceDeltVolt})`;
+                }
+            }
+
+            // 更新逻辑分支显示
+            document.getElementById('logicBranch').textContent = `当前逻辑: ${branchInfo}`;
+
+            // 显示结果
+            if (isCleared) {
+                displayResult('resultDeltVolt', uBalanceDeltVolt, 'mV', false);
+                displayResult('resultTime', null, '', true);
+                displayResult('resultSoc', null, '', true);
+                displayResult('resultVoltPerSoc', null, '', true);
+            } else {
+                displayResult('resultDeltVolt', uBalanceDeltVolt, 'mV', false);
+                displayResult('resultTime', guContinueTime, 'min', false);
+                displayResult('resultSoc', uBalancingSoc, '(0.1%SOC)', false);
+                displayResult('resultVoltPerSoc', ucVoltPerMillSoc, 'mV/0.1%SOC', false);
+            }
+        }
+
+        // 显示结果
+        function displayResult(elementId, value, unit, isCleared) {
+            const element = document.getElementById(elementId);
+            if (isCleared) {
+                element.textContent = '(均衡已清除)';
+                element.className = 'result-value cleared';
+            } else if (value === null || value === undefined) {
+                element.textContent = '(空)';
+                element.className = 'result-value empty';
+            } else {
+                element.textContent = `${value} ${unit}`;
+                element.className = 'result-value';
+            }
+        }
+
+        // 初始化
+        window.onload = function() {
+            renderConfigParams();
+            syncInputs('voltMax');
+            syncInputs('voltDiff');
+            calculate();
+        };
+    </script>
+</body>
+</html>

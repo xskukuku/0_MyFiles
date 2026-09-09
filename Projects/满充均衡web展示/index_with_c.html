@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>满充均衡Web演示 - 调用真实C代码</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.5em;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider-wrapper {
+            flex: 1;
+            position: relative;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 电压滑动条分段背景 */
+        .slider-wrapper.voltage {
+            background: linear-gradient(to right, 
+                #28a745 0%, #28a745 3%,      /* < 3450: 绿色 */
+                #ffc107 3%, #ffc107 40%,     /* 3450-3500: 黄色 */
+                #fd7e14 40%, #fd7e14 70%,    /* 3500-3650: 橙色 */
+                #dc3545 70%, #dc3545 100%    /* > 3650: 红色 */
+            );
+            border-radius: 5px;
+        }
+
+        /* 电压差滑动条分段背景 */
+        .slider-wrapper.voltdiff {
+            background: linear-gradient(to right,
+                #28a745 0%, #28a745 10%,     /* 0-20: 绿色 */
+                #ffc107 10%, #ffc107 20%,    /* 20-40: 黄色 */
+                #fd7e14 20%, #fd7e14 70%,    /* 40-140: 橙色 */
+                #dc3545 70%, #dc3545 100%    /* > 140: 红色 */
+            );
+            border-radius: 5px;
+        }
+
+        /* 阈值标记 */
+        .threshold-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .threshold-mark {
+            position: absolute;
+            height: 100%;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.7);
+            top: 0;
+        }
+
+        .threshold-label {
+            position: absolute;
+            top: -20px;
+            font-size: 0.75em;
+            color: #666;
+            font-weight: 600;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        input[type="range"] {
+            position: absolute;
+            width: 100%;
+            height: 8px;
+            background: transparent;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            border: 3px solid #667eea;
+            position: relative;
+            z-index: 10;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            border: 3px solid #667eea;
+            position: relative;
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .arrow-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #667eea;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .arrow-btn:hover {
+            background: #5568d3;
+            transform: scale(1.1);
+        }
+
+        .arrow-btn:active {
+            transform: scale(0.95);
+        }
+
+        input[type="number"] {
+            width: 100px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .value-display {
+            min-width: 120px;
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .param-grid {
+            display: grid;
+            gap: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .param-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .param-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .param-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .param-desc {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .param-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .param-input {
+            flex: 1;
+            padding: 6px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+
+        .param-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .param-unit {
+            color: #666;
+            font-size: 0.9em;
+            min-width: 40px;
+        }
+
+        .reset-btn {
+            padding: 6px 12px;
+            background: #ffc107;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            color: #333;
+        }
+
+        .reset-btn:hover {
+            background: #ffb300;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .result-value {
+            font-size: 1.3em;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .result-value.empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        .result-value.cleared {
+            color: #dc3545;
+            font-style: italic;
+        }
+
+        .status-notice {
+            text-align: center;
+            color: #28a745;
+            font-weight: 600;
+            padding: 10px;
+            background: #d4edda;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        .status-notice.error {
+            color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .status-notice.calculating {
+            color: #0056b3;
+            background: #cfe2ff;
+        }
+
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ 满充均衡Web演示</h1>
+            <p>Full Charge Balance Demo - 实时调用真实C代码</p>
+        </div>
+
+        <div class="content">
+            <div class="left-column">
+                <!-- 输入参数区域 -->
+                <div class="section">
+                    <h2>📊 输入参数</h2>
+                    
+                    <div class="input-group">
+                        <label>RteGetTotalCellVoltMaxMax (最大单体电压)</label>
+                        <div class="slider-container">
+                            <div class="slider-wrapper voltage">
+                                <div class="threshold-marks">
+                                    <div class="threshold-mark" style="left: 3%;">
+                                        <div class="threshold-label">3450</div>
+                                    </div>
+                                    <div class="threshold-mark" style="left: 40%;">
+                                        <div class="threshold-label">3500</div>
+                                    </div>
+                                    <div class="threshold-mark" style="left: 70%;">
+                                        <div class="threshold-label">3650</div>
+                                    </div>
+                                </div>
+                                <input type="range" id="voltMaxSlider" min="3300" max="3800" value="3450" step="1">
+                            </div>
+                            <div class="controls">
+                                <button class="arrow-btn" onclick="adjustValue('voltMax', -1)">▼</button>
+                                <input type="number" id="voltMaxInput" min="3300" max="3800" value="3450" step="1">
+                                <button class="arrow-btn" onclick="adjustValue('voltMax', 1)">▲</button>
+                                <div class="value-display"><span id="voltMaxDisplay">3450</span> mV</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>RteGetTotalCellVoltDiff (单体电压差)</label>
+                        <div class="slider-container">
+                            <div class="slider-wrapper voltdiff">
+                                <div class="threshold-marks">
+                                    <div class="threshold-mark" style="left: 10%;">
+                                        <div class="threshold-label">20</div>
+                                    </div>
+                                    <div class="threshold-mark" style="left: 20%;">
+                                        <div class="threshold-label">40</div>
+                                    </div>
+                                    <div class="threshold-mark" style="left: 70%;">
+                                        <div class="threshold-label">140</div>
+                                    </div>
+                                </div>
+                                <input type="range" id="voltDiffSlider" min="0" max="200" value="20" step="1">
+                            </div>
+                            <div class="controls">
+                                <button class="arrow-btn" onclick="adjustValue('voltDiff', -1)">▼</button>
+                                <input type="number" id="voltDiffInput" min="0" max="200" value="20" step="1">
+                                <button class="arrow-btn" onclick="adjustValue('voltDiff', 1)">▲</button>
+                                <div class="value-display"><span id="voltDiffDisplay">20</span> mV</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="statusNotice" class="status-notice">
+                        ✨ 实时计算已启用 - 正在连接服务器...
+                    </div>
+                </div>
+
+                <!-- 输出结果区域 -->
+                <div class="section">
+                    <h2>📈 计算结果</h2>
+                    <div class="result-box">
+                        <div class="result-item">
+                            <span class="result-label">uBalanceDeltVolt (均衡压差阈值)</span>
+                            <span class="result-value" id="resultDeltVolt">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">guContinueTime (持续时间)</span>
+                            <span class="result-value" id="resultTime">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">uBalancingSoc (均衡SOC阈值)</span>
+                            <span class="result-value" id="resultSoc">--</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">ucVoltPerMillSoc (每0.1%SOC电压变化)</span>
+                            <span class="result-value" id="resultVoltPerSoc">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 配置参数区域 -->
+            <div class="section">
+                <h2>⚙️ 配置参数</h2>
+                <div id="configParams" class="param-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isCalculating = false;
+        let pendingCalculation = false;
+
+        // 配置参数数据
+        const defaultConfig = {
+            "PRO_CHG_CELL_VOLT_MAX": { value: 3650, unit: "mV", desc: "充电电压上限 (LFP)", editable: false },
+            "PRO_CELL_CAPACITY": { value: 340, unit: "Ah", desc: "单体容量", editable: true },
+            "SOH_VALUE": { value: 1000, unit: "", desc: "健康状态 (100% = 1000, scale 0.1)", editable: true },
+            "BALANCE_CHGVOLTLVL0": { value: 3450, unit: "mV", desc: "电压阈值0", editable: false },
+            "BALANCE_CHGVOLTLVL1": { value: 3500, unit: "mV", desc: "电压阈值1", editable: false },
+            "BALANCE_CHGVOLTPERSOCLVL1": { value: 6, unit: "mV", desc: "3500mV时每0.1%SOC电压变化", editable: false },
+            "BALANCE_CHGVOLTPERSOCLVL2": { value: 10, unit: "mV", desc: "3650mV时每0.1%SOC电压变化", editable: false },
+            "BALANCE_CHGDELTVOLT0": { value: 20, unit: "mV", desc: "等级0均衡压差", editable: false },
+            "BALANCE_CHGDELTVOLT1": { value: 40, unit: "mV", desc: "等级1均衡压差", editable: false },
+            "BALANCE_CHGDELTVOLT2": { value: 140, unit: "mV", desc: "充电上限时均衡压差", editable: false },
+            "BALANCE_SOC_MIN": { value: 2, unit: "", desc: "最小SOC阈值 (0.1%SOC)", editable: false },
+            "BALANCE_SOC_NORMAL": { value: 4, unit: "", desc: "正常SOC阈值 (0.1%SOC)", editable: false },
+            "BALANCE_SOC_MAX": { value: 7, unit: "", desc: "最大SOC阈值 (0.1%SOC)", editable: false },
+            "BALANCE_TIME_MAX": { value: 1920, unit: "min", desc: "最大均衡时间 (32h)", editable: false }
+        };
+
+        let config = JSON.parse(JSON.stringify(defaultConfig));
+
+        // 渲染配置参数
+        function renderConfigParams() {
+            const container = document.getElementById('configParams');
+            container.innerHTML = '';
+
+            for (const [key, param] of Object.entries(config)) {
+                const paramDiv = document.createElement('div');
+                paramDiv.className = 'param-item';
+                
+                const displayValue = key === 'SOH_VALUE' ? `${param.value/10}%` : param.value;
+                
+                if (param.editable) {
+                    paramDiv.innerHTML = `
+                        <div class="param-header">
+                            <div class="param-label">${key}</div>
+                        </div>
+                        <div class="param-desc">${param.desc}</div>
+                        <div class="param-controls">
+                            <input type="number" class="param-input" id="param_${key}" value="${param.value}" onchange="onParamChange()">
+                            <span class="param-unit">${param.unit}</span>
+                            <button class="reset-btn" onclick="resetParam('${key}')">重置</button>
+                        </div>
+                    `;
+                } else {
+                    paramDiv.innerHTML = `
+                        <div class="param-header">
+                            <div class="param-label">${key}</div>
+                            <div style="color: #667eea; font-weight: 600;">${displayValue}${param.unit}</div>
+                        </div>
+                        <div class="param-desc">${param.desc}</div>
+                    `;
+                }
+                
+                container.appendChild(paramDiv);
+            }
+        }
+
+        // 参数变化时重新计算
+        function onParamChange() {
+            // 更新配置值
+            for (const [key, param] of Object.entries(config)) {
+                if (param.editable) {
+                    const input = document.getElementById(`param_${key}`);
+                    if (input) {
+                        param.value = parseInt(input.value) || param.value;
+                    }
+                }
+            }
+            calculate();
+        }
+
+        // 重置参数
+        function resetParam(key) {
+            const input = document.getElementById(`param_${key}`);
+            if (input) {
+                input.value = defaultConfig[key].value;
+                config[key].value = defaultConfig[key].value;
+                calculate();
+            }
+        }
+
+        // 同步滑块和输入框
+        function syncInputs(prefix) {
+            const slider = document.getElementById(`${prefix}Slider`);
+            const input = document.getElementById(`${prefix}Input`);
+            const display = document.getElementById(`${prefix}Display`);
+
+            slider.oninput = function() {
+                input.value = this.value;
+                display.textContent = this.value;
+                calculate();
+            };
+
+            input.oninput = function() {
+                let value = parseInt(this.value);
+                const min = parseInt(slider.min);
+                const max = parseInt(slider.max);
+                
+                if (isNaN(value)) value = min;
+                if (value < min) value = min;
+                if (value > max) value = max;
+                
+                this.value = value;
+                slider.value = value;
+                display.textContent = value;
+                calculate();
+            };
+        }
+
+        // 调整数值
+        function adjustValue(prefix, delta) {
+            const input = document.getElementById(`${prefix}Input`);
+            const slider = document.getElementById(`${prefix}Slider`);
+            const display = document.getElementById(`${prefix}Display`);
+            
+            let value = parseInt(input.value) + delta;
+            const min = parseInt(slider.min);
+            const max = parseInt(slider.max);
+            
+            if (value < min) value = min;
+            if (value > max) value = max;
+            
+            input.value = value;
+            slider.value = value;
+            display.textContent = value;
+            calculate();
+        }
+
+        // 调用C程序计算
+        async function calculate() {
+            if (isCalculating) {
+                pendingCalculation = true;
+                return;
+            }
+
+            isCalculating = true;
+            const voltMax = parseInt(document.getElementById('voltMaxInput').value);
+            const voltDiff = parseInt(document.getElementById('voltDiffInput').value);
+
+            const statusNotice = document.getElementById('statusNotice');
+            statusNotice.className = 'status-notice calculating';
+            statusNotice.textContent = '⏳ 计算中...';
+
+            try {
+                // 注意：当前C程序使用硬编码的配置，如果要支持动态配置需要修改C程序
+                const response = await fetch(`http://localhost:3000/calculate?voltMax=${voltMax}&voltDiff=${voltDiff}`);
+                
+                if (!response.ok) {
+                    throw new Error('服务器响应错误');
+                }
+
+                const result = await response.json();
+
+                // 显示结果
+                if (result.isCleared === 1) {
+                    displayResult('resultDeltVolt', result.uBalanceDeltVolt, 'mV', false);
+                    displayResult('resultTime', null, '', true);
+                    displayResult('resultSoc', null, '', true);
+                    displayResult('resultVoltPerSoc', null, '', true);
+                    statusNotice.className = 'status-notice error';
+                    statusNotice.textContent = '⚠️ 均衡标志已清除';
+                } else {
+                    displayResult('resultDeltVolt', result.uBalanceDeltVolt, 'mV', false);
+                    displayResult('resultTime', result.guContinueTime, `min (约 ${result.guContinueTimeHours} h)`, false);
+                    displayResult('resultSoc', result.uBalancingSoc, '(0.1%SOC)', false);
+                    displayResult('resultVoltPerSoc', result.ucVoltPerMillSoc === 0 ? null : result.ucVoltPerMillSoc, 'mV/0.1%SOC', false);
+                    statusNotice.className = 'status-notice';
+                    statusNotice.textContent = '✓ 实时计算成功';
+                }
+            } catch (error) {
+                statusNotice.className = 'status-notice error';
+                statusNotice.textContent = `✗ 错误: ${error.message}`;
+                console.error('计算错误:', error);
+            } finally {
+                isCalculating = false;
+                
+                if (pendingCalculation) {
+                    pendingCalculation = false;
+                    setTimeout(calculate, 100);
+                }
+            }
+        }
+
+        // 显示结果
+        function displayResult(elementId, value, unit, isCleared) {
+            const element = document.getElementById(elementId);
+            if (isCleared) {
+                element.textContent = '(均衡已清除)';
+                element.className = 'result-value cleared';
+            } else if (value === null || value === undefined) {
+                element.textContent = '(空)';
+                element.className = 'result-value empty';
+            } else {
+                element.textContent = `${value} ${unit}`;
+                element.className = 'result-value';
+            }
+        }
+
+        // 初始化
+        window.onload = function() {
+            renderConfigParams();
+            syncInputs('voltMax');
+            syncInputs('voltDiff');
+            calculate();
+        };
+    </script>
+</body>
+</html>

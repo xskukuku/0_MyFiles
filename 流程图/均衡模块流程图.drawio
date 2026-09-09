@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="第 1 页" id="4hKM7M_5KxNI0w58hKah">
-    <mxGraphModel dx="3142" dy="885" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2832" dy="1870" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -181,7 +181,7 @@
         <mxCell id="5PnqGV4CvaMVLkNiX-CP-117" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="三、电压异常" vertex="1">
           <mxGeometry height="35" width="210" x="-160" y="92.5" as="geometry" />
         </mxCell>
-        <mxCell id="5PnqGV4CvaMVLkNiX-CP-118" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="最小单体电压 &amp;gt; 4000mv&lt;div&gt;&lt;div&gt;最小单体电压 &amp;lt; 2400mv&lt;div&gt;最大单体电压 &amp;gt; 4000mv&lt;div&gt;最大单体电压 &amp;lt; 1500mv&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="5PnqGV4CvaMVLkNiX-CP-118" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="最小单体电压 &amp;gt; 4000mv&lt;div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;最小单体电压 &amp;lt; 2400mv&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;最大单体电压 &amp;gt; 4000mv&lt;/span&gt;&lt;div&gt;最大单体电压 &amp;lt; 1500mv&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="70" width="190" x="100" y="77.5" as="geometry" />
         </mxCell>
         <mxCell id="5PnqGV4CvaMVLkNiX-CP-124" edge="1" parent="1" source="5PnqGV4CvaMVLkNiX-CP-119" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="5PnqGV4CvaMVLkNiX-CP-123">
@@ -192,27 +192,27 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="5PnqGV4CvaMVLkNiX-CP-127" edge="1" parent="1" source="5PnqGV4CvaMVLkNiX-CP-119" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="5PnqGV4CvaMVLkNiX-CP-126">
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-6" edge="1" parent="1" source="5PnqGV4CvaMVLkNiX-CP-119" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="7_PCcIIIkU7Gobsk2uGF-5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="5PnqGV4CvaMVLkNiX-CP-143" connectable="0" parent="5PnqGV4CvaMVLkNiX-CP-127" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="否" vertex="1">
-          <mxGeometry relative="1" x="-0.5402" y="2" as="geometry">
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-8" connectable="0" parent="7_PCcIIIkU7Gobsk2uGF-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="否" vertex="1">
+          <mxGeometry relative="1" x="-0.3333" y="-2" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="5PnqGV4CvaMVLkNiX-CP-119" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="是否存在&lt;div&gt;禁止均衡的故障？&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="130" x="-440" y="110" as="geometry" />
+          <mxGeometry height="100" width="130" x="-440" y="-10" as="geometry" />
         </mxCell>
         <mxCell id="5PnqGV4CvaMVLkNiX-CP-122" edge="1" parent="1" source="5PnqGV4CvaMVLkNiX-CP-121" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="5PnqGV4CvaMVLkNiX-CP-119">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="5PnqGV4CvaMVLkNiX-CP-121" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="开始" vertex="1">
-          <mxGeometry height="30" width="120" x="-435" y="40" as="geometry" />
+          <mxGeometry height="30" width="120" x="-435" y="-77.5" as="geometry" />
         </mxCell>
-        <mxCell id="Z6WcI7IyufJ8XVpq6GlM-83" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Z6WcI7IyufJ8XVpq6GlM-82">
+        <mxCell id="Z6WcI7IyufJ8XVpq6GlM-83" edge="1" parent="1" source="5PnqGV4CvaMVLkNiX-CP-123" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Z6WcI7IyufJ8XVpq6GlM-82">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-850" y="150" />
+              <mxPoint x="-850" y="42.5" />
               <mxPoint x="-850" y="600" />
               <mxPoint x="-625" y="600" />
             </Array>
@@ -220,8 +220,8 @@
             <mxPoint x="-625" y="610" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="5PnqGV4CvaMVLkNiX-CP-123" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" value="1、&lt;span style=&quot;text-align: left;&quot;&gt;关闭所有电芯均衡，即所有MBCU_BMUxx_Balance_Controlxx置0&lt;/span&gt;&lt;div&gt;2、重置持续均衡计时器&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="280" x="-830" y="130" as="geometry" />
+        <mxCell id="5PnqGV4CvaMVLkNiX-CP-123" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="1、暂停&lt;span style=&quot;text-align: left;&quot;&gt;所有电芯均衡，即所有MBCU_BMUxx_Balance_Controlxx置0&lt;/span&gt;&lt;div&gt;2、重置持续均衡计时器&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="280" x="-835" y="10" as="geometry" />
         </mxCell>
         <mxCell id="5PnqGV4CvaMVLkNiX-CP-129" edge="1" parent="1" source="5PnqGV4CvaMVLkNiX-CP-126" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="5PnqGV4CvaMVLkNiX-CP-128">
           <mxGeometry relative="1" as="geometry" />
@@ -513,7 +513,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Z6WcI7IyufJ8XVpq6GlM-47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;strokeColor=#B20000;fontColor=#ffffff;" value="1、发送关闭所有电芯均衡的执行，即所有MBCU_BMUxx_Balance_Controlxx均为0&lt;div&gt;2、重置持续均衡计时器&lt;/div&gt;" vertex="1">
+        <mxCell id="Z6WcI7IyufJ8XVpq6GlM-47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="1、暂停所有电芯均衡的执行，即所有MBCU_BMUxx_Balance_Controlxx均为0&lt;div&gt;2、重置持续均衡计时器&lt;/div&gt;" vertex="1">
           <mxGeometry height="60" width="280" x="105" y="729.5" as="geometry" />
         </mxCell>
         <mxCell id="Z6WcI7IyufJ8XVpq6GlM-55" edge="1" parent="1" source="Z6WcI7IyufJ8XVpq6GlM-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Z6WcI7IyufJ8XVpq6GlM-49">
@@ -554,7 +554,7 @@
           <mxGeometry height="60" width="120" x="85" y="1029.5" as="geometry" />
         </mxCell>
         <mxCell id="Z6WcI7IyufJ8XVpq6GlM-64" parent="1" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.cloud_callout" value="行车模式但支路电流却小于0，&lt;div&gt;说明有问题，&lt;/div&gt;&lt;div&gt;停止所有均衡&lt;/div&gt;" vertex="1">
-          <mxGeometry height="110" width="220" x="75" y="619.5" as="geometry" />
+          <mxGeometry height="139.5" width="220" x="75" y="590" as="geometry" />
         </mxCell>
         <mxCell id="Z6WcI7IyufJ8XVpq6GlM-70" edge="1" parent="1" source="Z6WcI7IyufJ8XVpq6GlM-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Z6WcI7IyufJ8XVpq6GlM-66">
           <mxGeometry relative="1" as="geometry" />
@@ -617,7 +617,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Z6WcI7IyufJ8XVpq6GlM-69" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;1、如果持续均衡计时器满60s，则剩余均衡时间-1，并重置计时器&lt;/div&gt;2、开启已标记的电芯均衡&lt;span style=&quot;&quot;&gt;MBCU_BMUxx_Balance_Controlxx置1&lt;/span&gt;" vertex="1">
+        <mxCell id="Z6WcI7IyufJ8XVpq6GlM-69" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;div&gt;1、如果持续均衡计时器满60s，则剩余均衡时间减1，并重置计时器&lt;/div&gt;2、开启已标记的电芯均衡&lt;span style=&quot;&quot;&gt;MBCU_BMUxx_Balance_Controlxx置1&lt;/span&gt;" vertex="1">
           <mxGeometry height="60" width="220" x="-1520" y="440" as="geometry" />
         </mxCell>
         <mxCell id="Z6WcI7IyufJ8XVpq6GlM-72" edge="1" parent="1" source="Z6WcI7IyufJ8XVpq6GlM-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Z6WcI7IyufJ8XVpq6GlM-68">
@@ -639,7 +639,7 @@
         </mxCell>
         <mxCell id="Z6WcI7IyufJ8XVpq6GlM-97" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;dashed=1;dashPattern=8 8;fillColor=#f8cecc;strokeColor=#b85450;" value="">
           <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="-300" y="160" as="sourcePoint" />
+            <mxPoint x="-300" y="50" as="sourcePoint" />
             <mxPoint x="-180" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -654,6 +654,43 @@
             <mxPoint x="-350" y="585" as="sourcePoint" />
             <mxPoint x="-180" y="680" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-3" parent="1" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;dashed=1;" value="这里只是暂停均衡，并没有清除均衡标志位" vertex="1">
+          <mxGeometry height="80" width="230" x="-845" y="-95" as="geometry" />
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-4" parent="1" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;" value="这里只是暂停均衡，并没有清除均衡标志位" vertex="1">
+          <mxGeometry height="80" width="230" x="440" y="729.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-7" edge="1" parent="1" source="7_PCcIIIkU7Gobsk2uGF-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="5PnqGV4CvaMVLkNiX-CP-126">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-9" connectable="0" parent="7_PCcIIIkU7Gobsk2uGF-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="无" vertex="1">
+          <mxGeometry relative="1" x="-0.2941" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-11" edge="1" parent="1" source="7_PCcIIIkU7Gobsk2uGF-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="7_PCcIIIkU7Gobsk2uGF-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-12" connectable="0" parent="7_PCcIIIkU7Gobsk2uGF-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="是" vertex="1">
+          <mxGeometry relative="1" x="0.0708" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-5" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="是否有外部均衡命令标志位&lt;br&gt;RteGetExternalBalCmd" vertex="1">
+          <mxGeometry height="80" width="220" x="-485" y="117.5" as="geometry" />
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-13" edge="1" parent="1" source="7_PCcIIIkU7Gobsk2uGF-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="Z6WcI7IyufJ8XVpq6GlM-82">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-850" y="157.5" />
+              <mxPoint x="-850" y="600" />
+              <mxPoint x="-625" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7_PCcIIIkU7Gobsk2uGF-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" value="1、清除所有持续均衡标志位&lt;br&gt;2、停止所有电芯均衡" vertex="1">
+          <mxGeometry height="70" width="250" x="-815" y="122.5" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
