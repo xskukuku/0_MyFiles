@@ -1,0 +1,89 @@
+# 更新日志 - 2026-09-08
+
+## 版本 2.1 - 代码重构更新
+
+### 更新内容
+
+✅ **已同步最新的ApiSetBalanceFlag代码**
+   - 更新了C程序 (balance_calc.c)
+   - 重新编译了可执行文件 (balance_calc.exe)
+   - 逻辑保持不变，代码结构更清晰
+
+### 主要改进
+
+**原始代码结构：**
+```c
+if (voltMax >= BALANCE_CHGVOLTLVL1) {
+    // 分支3
+} else {
+    if (voltMax < BALANCE_CHGVOLTLVL0) {
+        // 分支1
+    } else {
+        // 分支2
+    }
+}
+```
+
+**重构后的代码结构：**
+```c
+// 先统一计算uBalanceDeltVolt
+if (uCellVoltMax < BALANCE_CHGVOLTLVL0) {
+    // < 3450mv
+} else if (uCellVoltMax >= PRO_CHG_CELL_VOLT_MAX) {
+    // >= 3650mv
+} else if (uCellVoltMax < BALANCE_CHGVOLTLVL1) {
+    // 3450-3500mv
+} else {
+    // 3500-3650mv
+}
+
+// 检查是否需要清除均衡标志
+if (uCellVoltDiff <= uBalanceDeltVolt) {
+    return;
+}
+
+// 然后根据电压范围计算其他参数
+if (uCellVoltMax >= BALANCE_CHGVOLTLVL1) {
+    // 高压区域逻辑
+} else {
+    // 低压区域逻辑
+}
+```
+
+### 优势
+
+1. **更清晰** - 先计算压差阈值，再判断是否清除，最后计算其他参数
+2. **更易读** - 电压区间判断更直观
+3. **更易维护** - 逻辑分层更合理
+4. **结果一致** - 计算结果与原版本完全相同
+
+### 验证测试
+
+✓ voltMax=3450, voltDiff=30
+  → uBalanceDeltVolt=20, guContinueTime=49 ✓
+
+✓ voltMax=3600, voltDiff=100
+  → 均衡标志已清除 ✓
+
+✓ voltMax=3650, voltDiff=150
+  → uBalanceDeltVolt=140, guContinueTime=122 ✓
+
+### 如何使用
+
+1. **启动服务器**
+   双击：启动服务器.bat
+
+2. **打开浏览器**
+   访问：http://localhost:3000
+
+3. **实时计算**
+   调整参数后自动计算，无需点击按钮
+
+### 文件更新
+
+- ✅ balance_calc.c (已更新)
+- ✅ balance_calc.exe (已重新编译)
+- ✅ server.js (无需更新)
+- ✅ index_with_c.html (无需更新)
+
+所有测试通过！可以正常使用。
